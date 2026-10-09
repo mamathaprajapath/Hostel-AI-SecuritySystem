@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - AI Hostel Security & Access System</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div id="wrapper">
+      <!-- Sidebar Navigation -->
+      <div id="sidebar">
+        <div class="sidebar-brand">
+          <i class="fa-solid fa-shield-halved text-primary"></i>
+          <span>HOSTEL AI GUARD</span>
+        </div>
+        <ul class="nav flex-column mt-3">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">
+              <i class="fa-solid fa-chart-line"></i> Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="monitor.html">
+              <i class="fa-solid fa-camera-web"></i> Live Gate Monitor
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="residents.html">
+              <i class="fa-solid fa-users"></i> Residents / Hostelers
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="parents.html">
+              <i class="fa-solid fa-user-shield"></i> Parents & Guardians
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="outing_requests.html">
+              <i class="fa-solid fa-clipboard-check"></i> Outing & Home Requests
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="unknown_events.html">
+              <i class="fa-solid fa-user-secret"></i> Unknown Events
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="access_logs.html">
+              <i class="fa-solid fa-clock-rotate-left"></i> Access Logs
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Main Content -->
+      <div id="main-content">
+        <!-- Top Header Bar -->
+        <div class="top-navbar">
+          <h5 class="page-title">Warden Overview & Surveillance Dashboard</h5>
+          <div class="d-flex align-items-center gap-3">
+            <span class="badge bg-success px-3 py-2"
+              ><i class="fa-solid fa-circle me-1"></i> System Active</span
+            >
+            <!-- Login / Role Selection -->
+            <div class="dropdown">
+              <button
+                class="btn btn-light dropdown-toggle login-button"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="fa-solid fa-user-circle me-2"></i>
+                Login
+              </button>
+
+              <ul class="dropdown-menu dropdown-menu-end login-menu">
+                <!-- College Management -->
+                <li>
+                  <h6 class="dropdown-header">
+                    <i class="fa-solid fa-building-columns me-2"></i>
+                    College Management
+                  </h6>
+                </li>
+
+                <li>
+                  <a class="dropdown-item role-item" href="#">
+                    <i class="fa-solid fa-user-tie me-2"></i>
+                    Principal
+                  </a>
+                </li>
+
+                <li>
+                  <a class="dropdown-item role-item" href="#">
+                    <i class="fa-solid fa-user-tie me-2"></i>
+                    Vice Principal
+                  </a>
+                </li>
+
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+
+                <!-- Hostel Management -->
+                <li>
+                  <h6 class="dropdown-header">
+                    <i class="fa-solid fa-building me-2"></i>
+                    Hostel Management
+                  </h6>
+                </li>
+
+                <li>
+                  <a class="dropdown-item role-item" href="#">
+                    <i class="fa-solid fa-user-shield me-2"></i>
+                    Dean
+                  </a>
+                </li>
+
+                <li>
+                  <a class="dropdown-item role-item" href="#">
+                    <i class="fa-solid fa-user-gear me-2"></i>
+                    Warden
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Page Content Body -->
+        <div class="container-fluid p-4">
+          <!-- Stat Cards Row -->
+          <div class="row g-4 mb-4">
+            <div class="col-md-3">
+              <div class="card stat-card p-3">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div>
+                    <div class="text-muted small">Total Hostelers</div>
+                    <h3 class="fw-bold mb-0" id="stat-total">0</h3>
+                  </div>
+                  <div class="stat-icon icon-blue">
+                    <i class="fa-solid fa-users"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card stat-card p-3">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div>
+                    <div class="text-muted small">Currently Inside</div>
+                    <h3 class="fw-bold mb-0 text-success" id="stat-inside">
+                      0
+                    </h3>
+                  </div>
+                  <div class="stat-icon icon-green">
+                    <i class="fa-solid fa-building-user"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card stat-card p-3">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div>
+                    <div class="text-muted small">Currently Outside</div>
+                    <h3 class="fw-bold mb-0 text-danger" id="stat-outside">
+                      0
+                    </h3>
+                  </div>
+                  <div class="stat-icon icon-orange">
+                    <i class="fa-solid fa-person-walking-arrow-right"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card stat-card p-3">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div>
+                    <div class="text-muted small">Pending Outings</div>
+                    <h3 class="fw-bold mb-0 text-warning" id="stat-outings">
+                      0
+                    </h3>
+                  </div>
+                  <div class="stat-icon icon-purple">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Second Row Stats & Action Banner -->
+          <div class="row g-4 mb-4">
+            <div class="col-md-8">
+              <div class="card stat-card p-4">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+                  <h6 class="fw-bold mb-0">
+                    <i class="fa-solid fa-bolt text-warning me-2"></i> Recent
+                    Gate Access Activity
+                  </h6>
+                  <a
+                    href="access_logs.html"
+                    class="btn btn-sm btn-outline-primary"
+                    >View All Logs</a
+                  >
+                </div>
+                <div class="table-responsive">
+                  <table
+                    class="table table-hover align-middle mb-0 table-custom"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Resident Name</th>
+                        <th>ID</th>
+                        <th>Room</th>
+                        <th>Event</th>
+                        <th>Time</th>
+                        <th>Match</th>
+                      </tr>
+                    </thead>
+                    <tbody id="recent-access-tbody">
+                      <tr>
+                        <td colspan="6" class="text-center text-muted py-3">
+                          Loading access activity...
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="card stat-card p-4 mb-4 bg-primary text-white">
+                <h6 class="fw-bold">
+                  <i class="fa-solid fa-video me-2"></i> Live Gate Camera
+                  Monitoring
+                </h6>
+                <p class="small text-white-50">
+                  Smart AI recognition with automatic gate entry/exit recording.
+                </p>
+                <a
+                  href="monitor.html"
+                  class="btn btn-light fw-bold text-primary w-100 py-2"
+                >
+                  <i class="fa-solid fa-camera me-1"></i> Open Gate Monitor
+                </a>
+              </div>
+
+              <div class="card stat-card p-4">
+                <h6 class="fw-bold mb-3">
+                  <i
+                    class="fa-solid fa-triangle-exclamation text-danger me-2"
+                  ></i>
+                  Security Alerts
+                </h6>
+                <div
+                  class="d-flex justify-content-between align-items-center p-3 bg-light rounded-3 mb-2"
+                >
+                  <div>
+                    <div class="fw-bold">Unknown Person Alerts</div>
+                    <div class="small text-muted">
+                      Unrecognized faces at gate
+                    </div>
+                  </div>
+                  <span class="badge bg-danger fs-6" id="stat-unknown">0</span>
+                </div>
+                <a
+                  href="unknown_events.html"
+                  class="btn btn-sm btn-outline-danger w-100 mt-2"
+                  >Review Alerts</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script>
+      async function loadDashboardData() {
+        try {
+          const stats = await apiFetch("/api/dashboard/stats");
+          document.getElementById("stat-total").innerText =
+            stats.total_residents;
+          document.getElementById("stat-inside").innerText =
+            stats.residents_inside;
+          document.getElementById("stat-outside").innerText =
+            stats.residents_outside;
+          document.getElementById("stat-outings").innerText =
+            stats.pending_outings;
+          document.getElementById("stat-unknown").innerText =
+            stats.unknown_alerts;
+
+          const tbody = document.getElementById("recent-access-tbody");
+          tbody.innerHTML = "";
+          if (stats.recent_activities.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted py-3">No gate access logs recorded yet today.</td></tr>`;
+            return;
+          }
+
+          stats.recent_activities.forEach((act) => {
+            const badgeClass =
+              act.event_type === "ENTRY"
+                ? "badge-status bg-inside"
+                : "badge-status bg-outside";
+            tbody.innerHTML += `
+                        <tr>
+                            <td class="fw-bold">${act.student_name}</td>
+                            <td><code>${act.student_id}</code></td>
+                            <td>${act.room_no}</td>
+                            <td><span class="${badgeClass}">${act.event_type}</span></td>
+                            <td>${act.time}</td>
+                            <td><span class="badge bg-light text-dark border">${act.confidence}</span></td>
+                        </tr>
+                    `;
+          });
+        } catch (err) {
+          showToast("Error loading dashboard data: " + err.message, "error");
+        }
+      }
+      document.addEventListener("DOMContentLoaded", loadDashboardData);
+    </script>
+  </body>
+</html>

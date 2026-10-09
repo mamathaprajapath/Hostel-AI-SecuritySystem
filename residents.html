@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Residents Management - AI Hostel Security</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- <link rel="stylesheet" href="/static/css/style.css"> -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="sidebar">
+        <div class="sidebar-brand">
+          <i class="fa-solid fa-shield-halved text-primary"></i>
+          <span>HOSTEL AI GUARD</span>
+        </div>
+        <ul class="nav flex-column mt-3">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">
+              <i class="fa-solid fa-chart-line"></i> Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="monitor.html">
+              <i class="fa-solid fa-camera-web"></i> Live Gate Monitor
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="residents.html">
+              <i class="fa-solid fa-users"></i> Residents / Hostelers
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="parents.html">
+              <i class="fa-solid fa-user-shield"></i> Parents & Guardians
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="outing_requests.html">
+              <i class="fa-solid fa-clipboard-check"></i> Outing & Home Requests
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="unknown_events.html">
+              <i class="fa-solid fa-user-secret"></i> Unknown Events
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="access_logs.html">
+              <i class="fa-solid fa-clock-rotate-left"></i> Access Logs
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="main-content">
+        <div class="top-navbar">
+          <h5 class="page-title">
+            <i class="fa-solid fa-users text-primary me-2"></i> Resident
+            Hostelers Management
+          </h5>
+          <button
+            class="btn btn-primary fw-bold"
+            data-bs-toggle="modal"
+            data-bs-target="#addResidentModal"
+          >
+            <i class="fa-solid fa-plus me-1"></i> Register New Hosteler
+          </button>
+        </div>
+
+        <div class="container-fluid p-4">
+          <!-- Search & Filters -->
+          <div class="card stat-card p-3 mb-4">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <span class="input-group-text bg-light"
+                    ><i class="fa-solid fa-magnifying-glass"></i
+                  ></span>
+                  <input
+                    type="text"
+                    id="search-input"
+                    class="form-control"
+                    placeholder="Search by name, student ID, room, or department..."
+                    onkeyup="loadResidents()"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <select
+                  id="state-filter"
+                  class="form-select"
+                  onchange="loadResidents()"
+                >
+                  <option value="">All Current Locations</option>
+                  <option value="INSIDE">Currently Inside</option>
+                  <option value="OUTSIDE">Currently Outside</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Table Card -->
+          <div class="card stat-card p-4">
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0 table-custom">
+                <thead>
+                  <tr>
+                    <th>Photo</th>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Room</th>
+                    <th>Department</th>
+                    <th>Phone</th>
+                    <th>Location</th>
+                    <th>Face Enrolled</th>
+                    <th class="text-end">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="residents-tbody">
+                  <tr>
+                    <td colspan="9" class="text-center text-muted py-4">
+                      Loading residents list...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Register Resident -->
+    <div class="modal fade" id="addResidentModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold">Register Hosteler</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <form id="add-resident-form" onsubmit="submitAddResident(event)">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label fw-bold">Student ID *</label>
+                <input
+                  type="text"
+                  name="student_id"
+                  class="form-control"
+                  placeholder="e.g. RES104"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold">Full Name *</label>
+                <input
+                  type="text"
+                  name="name"
+                  class="form-control"
+                  placeholder="Student Full Name"
+                  required
+                />
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-bold">Room Number *</label>
+                  <input
+                    type="text"
+                    name="room_no"
+                    class="form-control"
+                    placeholder="e.g. A-105"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-bold">Department *</label>
+                  <input
+                    type="text"
+                    name="department"
+                    class="form-control"
+                    placeholder="e.g. Computer Science"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-bold">Phone Number *</label>
+                  <input
+                    type="text"
+                    name="phone"
+                    class="form-control"
+                    placeholder="10-digit Phone"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-bold">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    placeholder="student@edu.com"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-light"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-primary fw-bold">
+                Register Resident
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Face Enrollment Upload -->
+    <div class="modal fade" id="enrollFaceModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold">
+              <i class="fa-solid fa-face-viewfinder text-primary me-2"></i>
+              Enroll Resident Face
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <form id="enroll-face-form" onsubmit="submitFaceEnrollment(event)">
+            <input type="hidden" id="enroll-resident-id" name="resident_id" />
+            <div class="modal-body">
+              <div class="alert alert-info small">
+                <i class="fa-solid fa-info-circle me-1"></i> Image Requirements:
+                JPG/PNG format, max size 5MB, clear lighting, exactly
+                <strong>1 face</strong> in photo.
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold">Resident</label>
+                <input
+                  type="text"
+                  id="enroll-resident-name"
+                  class="form-control bg-light"
+                  readonly
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold">Select Face Photo *</label>
+                <input
+                  type="file"
+                  id="face-file-input"
+                  name="file"
+                  class="form-control"
+                  accept="image/jpeg,image/png"
+                  required
+                />
+              </div>
+              <div
+                id="enroll-error-alert"
+                class="alert alert-danger d-none small"
+              ></div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-light"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="btn btn-success fw-bold"
+                id="btn-submit-enroll"
+              >
+                <i class="fa-solid fa-upload me-1"></i> Enroll & Train AI
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/residents.js"></script>
+  </body>
+</html>
